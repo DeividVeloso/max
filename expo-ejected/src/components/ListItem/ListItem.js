@@ -4,7 +4,7 @@ import Item from '../Item/Item';
 
 const ListItem = props => {
   return props.places.map((place, index) => (
-    <Item key={index} placeName={place} />
+    <Item id={index} key={index} placeName={place} onPressed={() => props.onItemDeleted(index)} />
   ));
 };
 export default ListItem;

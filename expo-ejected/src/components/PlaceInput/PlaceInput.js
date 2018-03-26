@@ -26,7 +26,6 @@ class PlaceInput extends Component {
   };
 
   placeSubmitHandler = () => {
-    console.log("Entrou", this.state.placeName);
     if(this.state.placeName){
       this.props.onPlaceAdded(this.state.placeName);
     }

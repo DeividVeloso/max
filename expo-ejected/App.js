@@ -1,6 +1,6 @@
 import React from 'react';
-import { StyleSheet, View } from 'react-native';
-import ListItem from './src/components/ListItem/ListItem';
+import { StyleSheet, View, ScrollView } from 'react-native';
+import PlaceList from './src/components/PlaceList/PlaceList';
 import PlaceInput from './src/components/PlaceInput/PlaceInput';
 
 export default class App extends React.Component {
@@ -11,22 +11,23 @@ export default class App extends React.Component {
   placeSubmitHandler = placeName => {
     this.setState(prevState => {
       return {
-        places: prevState.places.concat(placeName)
+        places: prevState.places.concat({ key: Math.random(), value: placeName })
       };
     });
   };
 
   placeDeletedHandler = index => {
+    console.log("INDEX", index)
     this.setState(prevState => {
       return {
-        places: prevState.places.filter((place, i) => {
+        places: prevState.places.filter((place) => {
           //Retorna verdadeiro se for diferente do index
           //Pois o que for igual é o que foi escolhido para ser deletado
-          return i !== index
+          return place.key !== index;
         })
-      }
+      };
     });
-  }
+  };
 
   render() {
     return (
@@ -35,9 +36,10 @@ export default class App extends React.Component {
           placeholder="An Awesome place"
           onPlaceAdded={this.placeSubmitHandler}
         />
-        <View style={styles.listView}>
-          <ListItem places={this.state.places} onItemDeleted={this.placeDeletedHandler} />
-        </View>
+        <PlaceList
+          places={this.state.places}
+          onItemDeleted={this.placeDeletedHandler}
+        />
       </View>
     );
   }
@@ -50,8 +52,5 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'flex-start'
-  },
-  listView: {
-    width: '100%'
   }
 });

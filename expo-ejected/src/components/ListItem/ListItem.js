@@ -1,19 +1,10 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
+import Item from '../Item/Item';
 
-const styles = StyleSheet.create({
-  listItem: {
-    width: '100%',
-    padding: 10,
-    backgroundColor: '#eee',
-    marginBottom: 5
-  }
-});
 const ListItem = props => {
-  return (
-    <View style={styles.listItem}>
-      <Text>{props.placeName}</Text>
-    </View>
-  );
+  return props.places.map((place, index) => (
+    <Item key={index} placeName={place} />
+  ));
 };
 export default ListItem;

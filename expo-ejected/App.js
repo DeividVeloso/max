@@ -1,50 +1,30 @@
 import React from 'react';
-import { StyleSheet, Text, View, TextInput, Button } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import ListItem from './src/components/ListItem/ListItem';
+import PlaceInput from './src/components/PlaceInput/PlaceInput';
 
 export default class App extends React.Component {
   state = {
-    placeName: '',
     places: []
   };
 
-  placeNameChangedHandler = event => {
-    this.setState({ placeName: event });
-  };
-
-  placeSubmitHandler = () => {
-    if (this.state.placeName) {
-      //Consigo pegar meu estado anterior
-      //E adicionar um novo objeto
-      this.setState(prevState => {
-        return {
-          places: prevState.places.concat(prevState.placeName)
-        };
-      });
-    }
+  placeSubmitHandler = placeName => {
+    this.setState(prevState => {
+      return {
+        places: prevState.places.concat(placeName)
+      };
+    });
   };
 
   render() {
-    const placesOutput = this.state.places.map((place, index) => (
-      <ListItem key={index} placeName={place} />
-    ));
     return (
       <View style={styles.container}>
-        <View style={styles.containerInput}>
-          <TextInput
-            style={styles.placeInput}
-            value={this.state.placeName}
-            onChangeText={this.placeNameChangedHandler}
-            placeholder="An Awesome place"
-          />
-          <Button
-            title="Add"
-            style={styles.placeButton}
-            onPress={this.placeSubmitHandler}
-          />
-        </View>
+        <PlaceInput
+          placeholder="An Awesome place"
+          onPlaceAdded={this.placeSubmitHandler}
+        />
         <View style={styles.listView}>
-          {placesOutput}
+          <ListItem places={this.state.places} />
         </View>
       </View>
     );
@@ -59,19 +39,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'flex-start'
   },
-  containerInput: {
-    width: '100%',
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between'
-  },
-  placeInput: {
-    width: '70%'
-  },
-  placeButton: {
-    width: '30%'
-  },
-  listView:{
+  listView: {
     width: '100%'
   }
 });

@@ -16,10 +16,12 @@ const PlaceList = props => {
       style={styles.listView}
       data={props.places}
       renderItem={(info) => {
+        console.log("INFO", info)
         return (
           <ListItem 
-            placeName={info.item.value}
-            onItemPressed={() => props.onItemDeleted(info.item.key)}
+            placeName={info.item.name}
+            placeImage={info.item.image}
+            onItemPressed={() => props.onItemSelected(info.item.key)}
           />
         );
       }}
